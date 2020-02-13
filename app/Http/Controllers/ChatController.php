@@ -74,6 +74,20 @@ class ChatController extends Controller
         // return view('profile');
     }
 
+
+    public function chatReciverId(Request $request)
+    {
+        // $reciverId = $_GET['ReciverID'];
+        if(!empty($_GET['ReciverID']))
+        {
+            $reciverId= $_GET['ReciverID'];   
+        }
+        else{
+            $reciverId=100;   
+        }
+        return $reciverId;
+    }
+
     public function logout($id)
     {
         // dd($id);

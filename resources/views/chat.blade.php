@@ -189,7 +189,7 @@
 					</div>
 				</div>
 				{{-- chat body end --}}
-				<p class="text-center">TunTun Chat <kbd>Version 1.2</kbd> Update comming soon</p>
+				<p class="text-center">TunTun Chat <kbd>Version 1.3</kbd> Update comming soon</p>
 			</div>
 			
 		</div>
@@ -243,9 +243,21 @@
 		//sent msg end
 
 		//chatWith Start
-		function chatWith($userId) {
-			var reciverId = $('#reciverId').val($userId); 
-			alert($userId);
+		function chatWith(userId) {
+			$('#reciverId').val(userId);
+			
+			$.ajax({
+				url: "{{route('reciverid')}}",
+				type: "get", //send it through get method
+				data: { ReciverID: userId, },
+				success: function(response) {
+					console.log(response);
+					//Do Something
+				},
+				error: function(xhr) {
+					//Do Something to handle error
+				}
+			});
 		}
 		//chatWith end
     </script>

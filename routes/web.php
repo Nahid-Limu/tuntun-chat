@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/chat', 'ChatController@sentMsg')->name('sentMsg');
     Route::get('/profile', 'ChatController@profile')->name('profile');
     Route::post('/profile', 'ChatController@Updateprofile')->name('Updateprofile');
+    Route::get('/reciverid', 'ChatController@chatReciverId')->name('reciverid');
 
     Route::get('/userlogout/{id}', 'ChatController@logout')->name('userlogout');
 });
