@@ -11,10 +11,34 @@ class ChatController extends Controller
 {
     public function index()
     {
-        $chats = DB::table('messages')->get();
+        // $a = 5;
+        // $b = 1;
+        // $array = [$a, $b];
+        // sort($array);
+        // $chattersId = (int)($array[0].$array[1]);
+        // dd(gettype($chattersId));
+        if(!empty($_GET['ReciverID']))
+        {
+            $reciverId = $_GET['ReciverID'];
+            // session()->forget('rid');
+            // session()->put('rid', $reciverId);
+            // $reciverId = 100;
+            // session()->get('rid')
+            // return $reciverId;  
+
+        }
+        else{
+            // session()->forget('rid');
+            $reciverId = null;   
+        }
+
         $users = DB::table('users')->get();
+        $reciveUser = DB::table('users')->find($reciverId);
+        $totalMsg = DB::table('messages')->where('user_id',Auth::user()->id)->where('reciver_id',$reciverId)->count();
+        $chats = DB::table('messages')->where('user_id',Auth::user()->id)->where('reciver_id',$reciverId)->get();
+        
         // dd($users);
-        return view('chat',compact('chats','users'));
+        return view('chat',compact('chats','users','reciveUser','totalMsg','reciverId'));
     }
 
     public function sentMsg(Request $request)

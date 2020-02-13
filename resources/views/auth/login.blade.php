@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WelCome To TunTun Chat</title>
-    {{-- <link rel="icon" type="image/png" href="{{ asset('appImage/icon.png') }}"/> --}}
     <link rel="icon" type="image/png" href="{!! asset('appImage/icon.png') !!}"/>
-    <!-- Font Icon -->
-    <!-- <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css"> -->
-
-    <!-- Main css -->
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
+   
     <link rel="stylesheet" type="text/css" href="{{ asset('css/material-design-iconic-font.min.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="{{ asset('css/fontawesome-free-5.12.1-web/css/all.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/loginReg.css') }}">
+
     <style>
         .alert {
           padding: 20px;
@@ -102,10 +98,8 @@
 
     </div>
 
-    <!-- JS -->
-    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-    <!-- <script src="js/main.js"></script> -->
+    
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 </html>

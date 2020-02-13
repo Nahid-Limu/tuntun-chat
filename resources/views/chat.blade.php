@@ -1,7 +1,7 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
@@ -9,11 +9,18 @@
 	<head>
 		<title>TunTun Chat</title>
 		<link rel="icon" type="image/png" href="{!! asset('appImage/icon.png') !!}"/>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+		
+		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/fontawesome-free-5.12.1-web/css/all.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
+
+		
+		
+		<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+		<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+		<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
+		<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script> -->
     	@include('style')
     </head>
 	<!--Coded With Love By Mutiullah Samim-->
@@ -100,15 +107,19 @@
 				<div class="col-md-8 col-xl-6 chat">
 					<div class="card">
 						<div class="card-header msg_head">
-							<div class="d-flex bd-highlight">
+							<div class="d-flex bd-highlight" id="recive_User">
 								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" id="user_profile_btn" class="rounded-circle user_img">
+									@if (isset($reciveUser->image))
+										<img src="{{ asset('userImage/'.$reciveUser->image) }}" id="user_profile_btn" class="rounded-circle user_img">
+									@else
+										<img src="{{ asset('userImage/noProfile.jpg') }}" id="user_profile_btn" class="rounded-circle user_img">
+									@endif
 									<span class="online_icon"></span>
 								</div>
 								
 								<div class="user_info">
-									<span>Chat with Mr X</span>
-									<p>1767 Messages</p>
+									<span>Chat with  {{ isset($reciveUser->name) ? "$reciveUser->name" : " " }}</span>
+									<p>{{$totalMsg}} Messages</p>
 								</div>
 								<div class="video_cam">
 									<span id="msg_delivery_status" class="text-success"></span>
@@ -141,6 +152,7 @@
 							
                             @php
 								$mytime = Carbon\Carbon::now();
+								var_dump( $reciverId );
 							@endphp
 							@foreach ($chats as $chat)
 							@if ($chat->user_id == Auth::user()->id)
@@ -155,16 +167,17 @@
                                     </div>
                                     <div class="msg_cotainer">
                                         {{$chat->message}}
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<span class="msg_time"><br>{{Carbon\Carbon::parse($chat->created_at)->toTimeString()}}</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<span class="msg_time"><br>{{Auth::user()->name}} at: {{Carbon\Carbon::parse($chat->created_at)->toTimeString()}}</span>
+									
                                     </div>
                                 </div>
 							@else
 								<div class="d-flex justify-content-end mb-4">
 									<div class="msg_cotainer_send">
 										{{$chat->message}}
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span class="msg_time_send">{{Carbon\Carbon::parse($chat->created_at)->toTimeString()}}</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="msg_time_send">{{$reciveUser->name}} at: {{Carbon\Carbon::parse($chat->created_at)->toTimeString()}}</span>
 									</div>
 										<div class="img_cont_msg">
 										<img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg" class="rounded-circle user_img_msg">
@@ -194,6 +207,11 @@
 			
 		</div>
     </body>
+	
+	<script src="{{ asset('js/jquery.min.js') }}"></script>
+	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('js/jquery.mCustomScrollbar.min.js') }}"></script>
+
     <script>
 		$(document).ready(function(){
             $('#action_menu_btn').click(function(){
@@ -208,8 +226,13 @@
 
 		$(document).ready(function() {
 			setInterval(function() {
-				$('#userList').load(" #userList");
+
+				$('#recive_User').load(" #recive_User");
 				$('#msgBody').load(" #msgBody");
+				$('#userList').load(" #userList");
+				
+				
+				
 				// $('#msgBody').scrollTop($('#msgBody')[0].scrollHeight);
 			}, 3000);  //Delay here = 3 seconds 
 		});
@@ -245,19 +268,26 @@
 		//chatWith Start
 		function chatWith(userId) {
 			$('#reciverId').val(userId);
-			
-			$.ajax({
-				url: "{{route('reciverid')}}",
-				type: "get", //send it through get method
-				data: { ReciverID: userId, },
-				success: function(response) {
-					console.log(response);
-					//Do Something
-				},
-				error: function(xhr) {
-					//Do Something to handle error
-				}
-			});
+			alert(userId);
+			// $.ajax({
+			// 	url: "{{route('chat')}}",
+			// 	type: "get", //send it through get method
+			// 	data: { ReciverID: userId, },
+			// 	success: function(response) {
+			// 		console.log(response);
+			// 		//Do Something
+			// 	},
+			// 	error: function(xhr) {
+			// 		//Do Something to handle error
+			// 	}
+			// });
+			var url =window.location.href
+			url = url.split("?");
+			// window.location.replace(url[0]+'?ReciverID='+userId);
+			// window.open(url[0]+'?ReciverID='+userId);
+			window.history.pushState('', 
+                     "", url[0]+'?ReciverID='+userId); 
+
 		}
 		//chatWith end
     </script>
