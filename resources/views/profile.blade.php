@@ -1,3 +1,5 @@
+<title>User Profile</title>
+<link rel="icon" type="image/png" href="{!! asset('appImage/icon.png') !!}"/>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -52,7 +54,7 @@
 					<label for="on_your_mind"><kbd>What's On Your Mind :</kbd>&nbsp&nbsp</label><input class="omMind" type="text" name="on_your_mind" id="on_your_mind" style="margin: 0 auto;" value="{{ Auth::user()->on_your_mind }}">
                     <input type="file" id="image" name="image" style="margin: 0 auto;"> 
 					<br>
-					<button type="submit" class="btn-sm btn-info">Uplode Image</button>
+					<button type="submit" class="btn-sm btn-info">Update Profile</button>
 				</form>
 					
 				</div>
