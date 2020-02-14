@@ -21,7 +21,7 @@
 					@if (isset(Auth::user()->image))
 						<img alt="" src="{{ asset('userImage/'.Auth::user()->image) }}">
 					@else
-						<img alt="" src="{{ asset('userImage/noProfile.jpg') }}">
+						<img alt="" src="{{ asset('appImage/noProfile.jpg') }}">
 					@endif
                 </div>
                 <div class="info">

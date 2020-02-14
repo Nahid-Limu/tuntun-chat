@@ -112,13 +112,13 @@
 									@if (isset($reciveUser->image))
 										<img src="{{ asset('userImage/'.$reciveUser->image) }}" id="user_profile_btn" class="rounded-circle user_img">
 									@else
-										<img src="{{ asset('userImage/noProfile.jpg') }}" id="user_profile_btn" class="rounded-circle user_img">
+										<img src="{{ asset('appImage/noProfile.jpg') }}" id="user_profile_btn" class="rounded-circle user_img">
 									@endif
 									<span class="online_icon"></span>
 								</div>
 								
 								<div class="user_info">
-									<span>Chat with  {{ isset($reciveUser->name) ? "$reciveUser->name" : " " }}</span>
+									<span>{{ isset($reciveUser->name) ? "Chat with  $reciveUser->name" : "Select User From List" }}</span>
 									<p>{{$totalMsg}} Messages</p>
 								</div>
 								<div class="video_cam">

@@ -17,6 +17,7 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->index();
             $table->integer('reciver_id')->index();
+            $table->integer('chatters_id')->index();
             $table->text('message')->index();
             $table->timestamps();
         });

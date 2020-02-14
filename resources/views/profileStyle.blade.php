@@ -195,7 +195,7 @@
 }
 
 .card.hovercard .cardheader {
-    background: url("userImage/profileCover.png");
+    background: url("appImage/profileCover.png");
     background-size: cover;
     height: 135px;
 }
