@@ -109,11 +109,17 @@
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight" id="recive_User">
 								<div class="img_cont">
-									@if (isset($reciveUser->image))
-										<img src="{{ asset('userImage/'.$reciveUser->image) }}" id="user_profile_btn" class="rounded-circle user_img">
+									@if (isset($reciveUser))
+										@if (isset($reciveUser->image))
+											<img src="{{ asset('userImage/'.$reciveUser->image) }}" id="user_profile_btn" class="rounded-circle user_img">
+										@else
+											<img src="{{ asset('appImage/noProfile.jpg') }}" id="user_profile_btn" class="rounded-circle user_img">
+										@endif
+										
 									@else
-										<img src="{{ asset('appImage/noProfile.jpg') }}" id="user_profile_btn" class="rounded-circle user_img">
+										<img src="{{ asset('appImage/select-user.jpg') }}" id="user_profile_btn" class="rounded-circle user_img">
 									@endif
+									
 									<span class="online_icon"></span>
 								</div>
 								
@@ -148,7 +154,7 @@
 							</div>
 						</div>
 						<div class="card-body msg_card_body" id="msgBody">
-							
+							<h1 id="wrng_msg"></h1>
 							
                             @php
 								$mytime = Carbon\Carbon::now();
@@ -180,7 +186,12 @@
 										<span class="msg_time_send">{{$reciveUser->name}} at: {{Carbon\Carbon::parse($chat->created_at)->toTimeString()}}</span>
 									</div>
 										<div class="img_cont_msg">
-										<img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg" class="rounded-circle user_img_msg">
+										@if (isset($reciveUser->image))
+											<img src="{{ asset('userImage/'.$reciveUser->image) }}" class="rounded-circle user_img_msg">
+										@else
+											<img src="{{ asset('userImage/noProfile.jpg') }}" class="rounded-circle user_img_msg">
+										@endif
+										{{-- <img src="{{ asset('userImage/noProfile.jpg') }}" class="rounded-circle user_img_msg"> --}}
 										</div>
 								</div>
 							@endif
@@ -194,7 +205,7 @@
 								</div>
 								<input type="hidden" name="reciverId" id="reciverId" value="">
 								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-								<div class="input-group-append">
+								<div class="input-group-append" id="sent_btn_div">
 									<span class="input-group-text send_btn"><i class="fas fa-location-arrow" style="color: aqua;"></i></span>
 								</div>
 							</div>
@@ -202,7 +213,7 @@
 					</div>
 				</div>
 				{{-- chat body end --}}
-				<p class="text-center">TunTun Chat <kbd>Version 1.3</kbd> Update comming soon</p>
+				<p class="text-center">TunTun Chat <kbd>Version 1.4</kbd> Update comming soon</p>
 			</div>
 			
 		</div>
@@ -225,13 +236,13 @@
         });
 
 		$(document).ready(function() {
+			var reciverId = $('#reciverId').val();
+			
 			setInterval(function() {
 
 				$('#recive_User').load(" #recive_User");
 				$('#msgBody').load(" #msgBody");
 				$('#userList').load(" #userList");
-				
-				
 				
 				// $('#msgBody').scrollTop($('#msgBody')[0].scrollHeight);
 			}, 3000);  //Delay here = 3 seconds 
@@ -245,6 +256,12 @@
             var msg = $('.type_msg').val();
 			var reciverId = $('#reciverId').val();
             alert(reciverId);
+			if (reciverId == '') {
+				$('#wrng_msg').text('no user selected');
+			} else {
+				$('#wrng_msg').text('okky');
+			}
+			
             $.ajax({
                 url:"{{route('sentMsg')}}",
                 method:"post",
