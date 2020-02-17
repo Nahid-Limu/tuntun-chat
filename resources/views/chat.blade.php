@@ -147,18 +147,18 @@
 									<li><i class="fas fa-ban"></i> Block</li>
 								</ul>
 							</div>
-							<div class="profile_menu action_menu">
+							{{-- <div class="profile_menu action_menu">
 								<ul>
 									<li><i class="fas fa-user-circle"></i> View profile</li>
 								</ul>
-							</div>
+							</div> --}}
 						</div>
 						<div class="card-body msg_card_body" id="msgBody">
-							<h1 id="wrng_msg"></h1>
+							<h3 class="text-warning" id="wrng_msg"></h3>
 							
                             @php
 								$mytime = Carbon\Carbon::now();
-								var_dump( $reciverId );
+								// var_dump( $reciverId );
 							@endphp
 							@foreach ($chats as $chat)
 							@if ($chat->user_id == Auth::user()->id)
@@ -255,11 +255,11 @@
             // var myData = $('#create_course_modal_form').serialize();
             var msg = $('.type_msg').val();
 			var reciverId = $('#reciverId').val();
-            alert(reciverId);
+            // alert(reciverId);
 			if (reciverId == '') {
 				$('#wrng_msg').text('no user selected');
 			} else {
-				$('#wrng_msg').text('okky');
+				// $('#wrng_msg').text('okky');
 			}
 			
             $.ajax({
@@ -285,7 +285,7 @@
 		//chatWith Start
 		function chatWith(userId) {
 			$('#reciverId').val(userId);
-			alert(userId);
+			// alert(userId);
 			// $.ajax({
 			// 	url: "{{route('chat')}}",
 			// 	type: "get", //send it through get method
