@@ -40,29 +40,34 @@
 						{{-- chat list start --}}
 						<div class="card-body contacts_body" id="userList">
 							<ui class="contacts">
-									<li class="active">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												@if (isset(Auth::user()->image))
-													<img src="{{ asset('userImage/'.Auth::user()->image) }}" class="rounded-circle user_img">
-												@else
-													<img src="{{ asset('userImage/noProfile.jpg') }}" class="rounded-circle user_img">
-												@endif
+								<li class="active" id="loginUser">
+									<div class="d-flex bd-highlight">
+										<div class="img_cont">
+											@if (isset(Auth::user()->image))
+												<img src="{{ asset('userImage/'.Auth::user()->image) }}" class="rounded-circle user_img">
+											@else
+												<img src="{{ asset('userImage/noProfile.jpg') }}" class="rounded-circle user_img">
+											@endif
 
-												<span class="online_icon"></span>
-											</div>
-											<div class="user_info">
-												<span>Me</span>
-												
-												<p>{{Auth::user()->name}}  is online <br>
-													<small >{{Auth::user()->on_your_mind}}</small>
-												</p>
-											</div>
+											<span class="online_icon"></span>
 										</div>
-									</li>
+										<div class="user_info">
+											<span>Me</span>
+											
+											<p>{{Auth::user()->name}}  is online <br>
+												<small >{{Auth::user()->on_your_mind}}</small>
+											</p>
+										</div>
+										<div class="user_info">
+											<button onclick="friendtList()" class="btn btn-sm btn-primary"><i class="far fa-comments"></i></button>
+											<button id="req_btn" onclick="requestList( '{{route('requestList')}}' )" class="btn btn-sm btn-info"><i class="fa fa-users" aria-hidden="true"></i> <small class="badge badge-pill badge-danger">7</small> </button>
+										</div>
+									</div>
+								</li>
+							</ui>
+							<ui class="contacts" id="friendList" >
 								@foreach ($users as $user)
 									@if($user->id != Auth::user()->id)
-
 									<li class="active" onclick="chatWith('<?php echo $user->id;?>')">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
@@ -94,6 +99,10 @@
 									@endif
 									
 								@endforeach
+							</ui>
+							
+							<ui class="contacts" id="reqList" >
+								
 							</ui>
 							
 						</div>
@@ -222,6 +231,7 @@
 	<script src="{{ asset('js/jquery.min.js') }}"></script>
 	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.mCustomScrollbar.min.js') }}"></script>
+	{{-- <script src="{{ asset('js/all.js') }}"></script> --}}
 
     <script>
 		$(document).ready(function(){
@@ -242,7 +252,10 @@
 
 				$('#recive_User').load(" #recive_User");
 				$('#msgBody').load(" #msgBody");
-				$('#userList').load(" #userList");
+				// $('#userList').load(" #userList");
+				$('#loginUser').load(" #loginUser");
+				$('#friendList').load(" #friendList");
+				// $('#reqList').load(" #reqList");
 				
 				// $('#msgBody').scrollTop($('#msgBody')[0].scrollHeight);
 			}, 3000);  //Delay here = 3 seconds 
@@ -307,5 +320,32 @@
 
 		}
 		//chatWith end
+
+		function requestList() {
+			alert('ok');
+			$.ajax({
+				url: "{{route('requestList')}}",
+				type: "get", //send it through get method
+				
+				success: function(response) {
+					console.log(response);
+					//Do Something
+					alert(response);
+					// $('#reqList').html();
+					$('#reqList').html(response );
+					$('#friendList').hide();
+					// $('#reqList').append(response );
+				},
+				error: function(xhr) {
+					//Do Something to handle error
+				}
+			});
+		}
+
+
+		function friendtList() {
+			// $('#friendList').show();
+			$('#userList').load(" #userList");
+		}
     </script>
 </html>

@@ -21,10 +21,17 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/chat', 'ChatController@index')->name('chat');
     Route::post('/chat', 'ChatController@sentMsg')->name('sentMsg');
-    Route::get('/profile', 'ChatController@profile')->name('profile');
-    Route::post('/profile', 'ChatController@Updateprofile')->name('Updateprofile');
     Route::get('/reciverid', 'ChatController@chatReciverId')->name('reciverid');
+
+    Route::get('/profile', 'ProfileController@profile')->name('profile');
+    Route::post('/profile', 'ProfileController@Updateprofile')->name('Updateprofile');
+    
+    Route::get('/requestList', 'FriendReqestController@requestList')->name('requestList');
 
     Route::get('/userlogout/{id}', 'ChatController@logout')->name('userlogout');
 });
+
+// Route::get('/test', function () {
+//     return view('requestList');
+// });
 
